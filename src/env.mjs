@@ -6,7 +6,10 @@ import { z } from "zod";
  */
 const server = z.object({
   DATABASE_URL: z.string().url(),
-  NODE_ENV: z.enum(["development", "test", "production"]),
+  NODE_ENV: z.enum([ "development", "test", "production" ]),
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+  CLERK_SECRET_KEY: z.string().min(1),
+  OPENAI_API_KEY: z.string().min(1),
 });
 
 /**
@@ -27,6 +30,9 @@ const processEnv = {
   DATABASE_URL: process.env.DATABASE_URL,
   NODE_ENV: process.env.NODE_ENV,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+  OPENAI_API_KEY: process.env.OPENAI_API_KEY,
 };
 
 // Don't touch the part below
@@ -68,7 +74,7 @@ if (!!process.env.SKIP_ENV_VALIDATION == false) {
             ? "❌ Attempted to access a server-side environment variable on the client"
             : `❌ Attempted to access server-side environment variable '${prop}' on the client`,
         );
-      return target[/** @type {keyof typeof target} */ (prop)];
+      return target[/** @type {keyof typeof target} */ (prop) ];
     },
   });
 }

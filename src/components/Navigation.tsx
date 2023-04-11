@@ -1,5 +1,6 @@
 import { useAuth, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export function Navigation() {
   const { isLoaded, isSignedIn } = useAuth();
@@ -11,16 +12,27 @@ export function Navigation() {
   return (
     <nav className="">
       {isSignedIn && (
-        <div className="flex items-center gap-6 pr-4 font-medium text-slate-600 hover:text-slate-900">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="flex items-center gap-2 pr-4 font-medium text-slate-600 hover:text-slate-900"
+        >
           <Link
-            className="rounded-md bg-gradient-to-b from-slate-700 to-slate-900 px-3 py-2 text-slate-50 hover:text-white"
+            className="rounded-md px-3 py-1 hover:bg-slate-100"
             href="/start"
           >
             Start
           </Link>
+          <Link
+            className="rounded-md px-3 py-1 hover:bg-slate-100"
+            href="/topics"
+          >
+            My topics
+          </Link>
 
           <UserButton />
-        </div>
+        </motion.div>
       )}
       {!isSignedIn && (
         <div className="flex gap-4">
